@@ -179,6 +179,88 @@ namekusei.delete('/api/products/:id', async (req, res) => {
 });
 
 
+//CRUD sales
+namekusei.post('/api/sales', async (req, res) => {
+    try {
+        const sale = req.body;
+        const newSales = await freezer
+            .insert(sale)
+            .into('sales')
+            .returning(['product_id', 'customer_id', 'quantity', 'active']);
+        res.status(201).json(newSales);
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ error: 'Error al registrar la venta' });
+    }
+});
+
+//get all sales
+namekusei.get('/api/sales', async (req, res) => {
+    try {
+        const allSales = await freezer.select('*').from('sales')
+            .where({ active: true })
+        res.status(200).json(allSales);
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error: 'Error al obtener la ventas' });
+    }
+}); 
+
+//update sales
+namekusei.put('/api/sales/:id', async (req, res) => {
+    try {
+        const idSale = req.params.id;
+        const bodyToUpdate = req.body;
+        const updateSale = await freezer
+            .update(bodyToUpdate)
+            .from('sales')
+            .where({ sale_id: idSale, active: true })
+            .returning(['sale_id','customer_id','product_id', 'quantity', 'active']);
+        res.status(200).json(updateSale)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ error: ' error al actualizar la venta' })
+
+    }
+});
+
+//sales one by id
+namekusei.get('/api/sales/:id', async (req, res) => {
+    try {
+        const idSale = req.params.id;
+        const sale = await freezer
+            .select('*')
+            .from('sales')
+            .where({ sale_id: idSale, active: true });
+
+        if (sale.length === 0) {
+            res.status(404).json({ message: 'venta  no encontrado' });
+        } else {
+            res.status(200).json(sale[0]);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ error: 'No se puede realizar la operación solicitada' });
+    }
+});
+
+//logic delete sales
+namekusei.delete('/api/sales/:id', async (req, res) => {
+    try {
+        const idSales = req.params.id
+        await freezer
+            .update({ active: false })
+            .from('sales')
+            .where({ sale_id: idSales })
+        res.status(204).json()
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ error: 'no pudimos concretar la peticion' })
+
+    }
+});
+
+
 
 
 namekusei.listen(3000, () => {
