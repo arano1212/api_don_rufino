@@ -53,11 +53,28 @@ const getCustomersByCity = () => {
         .where({ city: 'monterrey', active: true });
 };
 
+const getCustomersWithoutSalesModel = () => {
+    return freezer
+        .select('customer_id', 'first_name', 'last_name')
+        .from('customers')
+        .whereNotExists(function() {
+            this.select('customer_id')
+                .from('sales')
+                .whereRaw('sales.customer_id = customers.customer_id')
+                .andWhere('active', true);
+        });
+};
+
+
+
+
 module.exports = {
     createCustomer,
     getAll,
     getOneById,
     update,
     deleteCustomer,
-    getCustomersByCity
+    getCustomersByCity,
+    getCustomersWithoutSalesModel,
+    
 }

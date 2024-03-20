@@ -76,6 +76,16 @@ const getCustomersInMonterrey = async (req, res) => {
     }
 };
 
+const getCustomersWithoutSalesController = async (req, res) => {
+    try {
+        const customersWithoutSales = await Customer.getCustomersWithoutSalesModel();
+        res.json(customersWithoutSales);
+    } catch (error) {
+        console.error('Error al obtener clientes sin ventas:', error);
+        res.status(500).json({ error: 'Error al obtener clientes sin ventas' });
+    }
+};
+ 
 
 
 module.exports = {
@@ -84,5 +94,7 @@ module.exports = {
     findOneCustomer,
     updateCostumer,
     deleteCustomer,
-    getCustomersInMonterrey
+    getCustomersInMonterrey,
+    getCustomersWithoutSalesController,
+
 }

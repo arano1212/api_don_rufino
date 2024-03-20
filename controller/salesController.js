@@ -63,10 +63,75 @@ const deleteSaleController= async (req, res) => {
     }
 };
 
+const getProductMoreTenController = async (req, res) => {
+    const maxQuantity = req.params.maxQuantity; 
+    const products = await Sale.getSalesOverTenUnitsModel(maxQuantity); 
+    res.json(products);
+};
+
+const getCustomersWhoBoughtAllProductsController = async (req, res) => {
+    try {
+        const customersWhoBoughtAllProducts = await Sale.getCustomersWhoBoughtAllProductsModel();
+        res.json(customersWhoBoughtAllProducts);
+    } catch (error) {
+        console.error('Error al obtener clientes que han comprado todos los productos:', error);
+        res.status(500).json({ error: 'Error al obtener clientes que han comprado todos los productos' });
+    }
+};
+
+const getTotalQuantityByCustomerController = async (req, res) => {
+    try {
+        const totalQuantityByCustomer = await Sale.getTotalQuantityByCustomerModel();
+        res.json(totalQuantityByCustomer);
+    } catch (error) {
+        console.error('Error al obtener la suma total de la cantidad de productos por cliente:', error);
+        res.status(500).json({ error: 'Error al obtener la suma total de la cantidad de productos por cliente' });
+    }
+};
+
+
+const getProductsNotBoughtByGuadalajaraCustomersController = async (req, res) => {
+    try {
+        const productsNotBought = await Sale.getProductsNotBoughtByGuadalajaraCustomersModel();
+        res.json(productsNotBought);
+    } catch (error) {
+        console.error('Error al obtener los productos no comprados por clientes de Guadalajara:', error);
+        res.status(500).json({ error: 'Error al obtener los productos no comprados por clientes de Guadalajara' });
+    }
+};
+
+const getProductsSoldToMonterreyAndCancunCustomersController = async (req, res) => {
+    try {
+        const productsSoldToMonterreyAndCancun = await Sale.getProductsSoldToMonterreyAndCancunCustomersModel();
+        res.json(productsSoldToMonterreyAndCancun);
+    } catch (error) {
+        console.error('Error al obtener los productos vendidos a clientes de Monterrey y Cancún:', error);
+        res.status(500).json({ error: 'Error al obtener los productos vendidos a clientes de Monterrey y Cancún' });
+    }
+};
+
+const getCitiesWhereAllProductsSoldController = async (req, res) => {
+    try {
+        const citiesWhereAllProductsSold = await Sale.getCitiesWhereAllProductsSoldModel();
+        res.json(citiesWhereAllProductsSold);
+    } catch (error) {
+        console.error('Error al obtener las ciudades donde se han vendido todos los productos:', error);
+        res.status(500).json({ error: 'Error al obtener las ciudades donde se han vendido todos los productos' });
+    }
+};
+
+
+
 module.exports={
     createSaleController,
     getAllSalesController,
     updateSaleController,
     getOneSaleIdController,
-    deleteSaleController
+    deleteSaleController,
+    getProductMoreTenController,
+    getCustomersWhoBoughtAllProductsController,
+    getTotalQuantityByCustomerController,
+    getProductsNotBoughtByGuadalajaraCustomersController,
+    getProductsSoldToMonterreyAndCancunCustomersController,
+    getCitiesWhereAllProductsSoldController
 }
