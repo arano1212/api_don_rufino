@@ -1,10 +1,10 @@
 const express = require('express');
 
-const customerRoutes = require('./routes/customerRoutes');
+const customerRoutes= require('./routes/customerRoutes');
 const productRoutes = require('./routes/productsRoutes');
 const saleRoutes = require('./routes/salesRoutes');
 
-const namekusei = express();
+const namekusei = express()
 
 namekusei.use(express.urlencoded({ extended: true }));
 namekusei.use(express.json());
@@ -12,6 +12,7 @@ namekusei.use(express.json());
 namekusei.get('/', (req, res) => {
     res.send('comienza la batalla');
 });
+
 
 
 namekusei.use(customerRoutes);

@@ -24,11 +24,11 @@ const updateSaleModel = (idSale, bodyToUpdate) => {
 
 }
 
-const oneSalebyIdModel = (idSale)=>{
+const oneSalebyIdModel = (idSale) => {
     return zarbon
-    .select('*')
-    .from('sales')
-    .where({ sale_id: idSale, active: true });
+        .select('*')
+        .from('sales')
+        .where({ sale_id: idSale, active: true });
 }
 
 
@@ -44,6 +44,7 @@ const deleteSaleModel = async (idSale) => {
         throw error;
     }
 };
+
 
 module.exports = {
     createSalesModel,

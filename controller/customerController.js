@@ -65,10 +65,24 @@ const deleteCustomer = async (req, res) => {
     }
 };
 
+
+const getCustomersInMonterrey = async (req, res) => {
+    try {
+        const customers = await Customer.getCustomersByCity();
+        res.status(200).json(customers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al obtener los clientes de Monterrey' });
+    }
+};
+
+
+
 module.exports = {
     createCustomer,
     getAll,
     findOneCustomer,
     updateCostumer,
-    deleteCustomer
+    deleteCustomer,
+    getCustomersInMonterrey
 }

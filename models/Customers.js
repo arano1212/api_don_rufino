@@ -45,10 +45,19 @@ const deleteCustomer = async (idCustomer) => {
     }
 };
 
+
+const getCustomersByCity = () => {
+    return freezer
+        .select('*')
+        .from('customers')
+        .where({ city: 'monterrey', active: true });
+};
+
 module.exports = {
     createCustomer,
     getAll,
     getOneById,
     update,
-    deleteCustomer
+    deleteCustomer,
+    getCustomersByCity
 }
