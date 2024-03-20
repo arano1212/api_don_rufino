@@ -64,11 +64,21 @@ const deleteProductController= async (req, res) => {
     }
 };
 
+const getProductsUnderMaxPriceController = async (req, res) => {
+    const maxPrice = req.params.maxPrice;
+    const products = await Product.getProductsUnderFifteenPesosModel(maxPrice);
+    res.json(products);
+};
+
+
+
+
 module.exports = {
     getAllProductsController,
     createProductController,
     findOneProductController,
     updateProductController,
-    deleteProductController
+    deleteProductController,
+    getProductsUnderMaxPriceController
 
 }

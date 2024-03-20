@@ -45,12 +45,21 @@ const deleteProductModel = async (idProduct) => {
     }
 };
 
+const getProductsUnderFifteenPesosModel = () => {
+    return dodoria
+        .select('product_id', 'description')
+        .from('products')
+        .where('price', '<', 15);
+};
+
+
 
 module.exports = {
     getAllProductsModel,
     createProductModel,
     getOneProductIdModel,
     updateModel,
-    deleteProductModel
+    deleteProductModel,
+    getProductsUnderFifteenPesosModel
 
 }
